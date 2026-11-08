@@ -1,0 +1,36 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+build/
+dist/
+
+# Data: never commit raw downloads or generated tables
+data/raw/*
+!data/raw/.gitkeep
+data/interim/*
+!data/interim/.gitkeep
+# Cached model responses may quote copyrighted text. Commit only once licences allow.
+data/cache/llm/*
+!data/cache/llm/.gitkeep
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Node / Next.js
+node_modules/
+client/.next/
+client/out/
+client/next-env.d.ts
+*.tsbuildinfo
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+data/demo/

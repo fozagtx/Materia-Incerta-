@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+/* shadcn/ui-style tokens. Light by default, dark via prefers-color-scheme. */
+:root {
+  --background: oklch(0.985 0.004 85);
+  --foreground: oklch(0.22 0.01 60);
+  --card: oklch(1 0 0);
+  --muted: oklch(0.955 0.006 85);
+  --muted-foreground: oklch(0.48 0.01 60);
+  --border: oklch(0.9 0.008 85);
+  --accent: oklch(0.42 0.08 200);
+  --accent-foreground: oklch(0.985 0 0);
+  --strong: oklch(0.52 0.12 155);
+  --moderate: oklch(0.62 0.13 75);
+  --weak: oklch(0.55 0.02 60);
+  --danger: oklch(0.52 0.19 27);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: oklch(0.18 0.006 60);
+    --foreground: oklch(0.93 0.006 85);
+    --card: oklch(0.22 0.006 60);
+    --muted: oklch(0.26 0.006 60);
+    --muted-foreground: oklch(0.7 0.01 60);
+    --border: oklch(0.32 0.008 60);
+    --accent: oklch(0.72 0.09 200);
+    --accent-foreground: oklch(0.18 0.006 60);
+    --strong: oklch(0.72 0.13 155);
+    --moderate: oklch(0.78 0.13 80);
+    --weak: oklch(0.7 0.02 60);
+    --danger: oklch(0.7 0.17 27);
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-strong: var(--strong);
+  --color-moderate: var(--moderate);
+  --color-weak: var(--weak);
+  --color-danger: var(--danger);
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+* {
+  border-color: var(--border);
+}
