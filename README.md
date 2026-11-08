@@ -23,7 +23,7 @@
 
 ## Demo video
 
-[**Watch the 90-second pitch and demo**](docs/video/materia-incerta-demo.mp4) (1080p, 13 MB). The model answers in it come from a live Nebius run on Dioscorides' Greek text and *Flora Europaea*, using [`pipeline/examples/alyssos_live.py`](pipeline/examples/alyssos_live.py). The video's source is in [`video/`](video/).
+The 90-second pitch and demo is built with Remotion in [`video/`](video/). Its model answers come from a live Nebius run on Dioscorides' Greek text and *Flora Europaea*, using [`pipeline/examples/alyssos_live.py`](pipeline/examples/alyssos_live.py). Render it with `npm --prefix video run render`.
 
 ## The problem
 
@@ -188,7 +188,7 @@ Materia-Incerta-/
 │   ├── interim/                   # generated tables, never committed
 │   └── cache/llm/                 # cached model answers
 ├── video/                         # Remotion source for the pitch video
-├── docs/                          # open questions, screenshots, rendered video
+├── docs/                          # open questions, screenshots
 ├── PRD.md                         # product spec
 └── AGENTS.md                      # working rules for contributors and coding agents
 ```

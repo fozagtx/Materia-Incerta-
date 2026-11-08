@@ -44,7 +44,7 @@ pipeline/
     cli.py                 `python -m materia_incerta ...`
   examples/alyssos_live.py Live model check on public-domain texts (not the benchmark)
   tests/                   Use the synthetic demo only, never real plant data
-video/                     Remotion pitch video; rendered file in docs/video/
+video/                     Remotion pitch video source; rendered files are not committed
 data/
   raw/                     Downloaded sources, never committed
   interim/                 Generated tables, never committed

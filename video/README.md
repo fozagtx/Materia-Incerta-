@@ -1,6 +1,6 @@
 # Pitch video
 
-A 90-second pitch and demo built with [Remotion](https://www.remotion.dev). The rendered file is [`docs/video/materia-incerta-demo.mp4`](../docs/video/materia-incerta-demo.mp4).
+A 90-second pitch and demo built with [Remotion](https://www.remotion.dev). Rendered files go to `video/out/` and are not committed.
 
 The structure follows Oren Klaff's *Pitch Anything* (frame, story, intrigue, idea, proof, prize, close) and the demo-video guidance in The Hackathon Playbook: 60 to 90 seconds, problem first, then the product working.
 
