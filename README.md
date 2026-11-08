@@ -1,130 +1,92 @@
 # Materia Incerta
 
-How confident can we be about which plant a Byzantine drug name refers to, and which compounds depend on that answer?
+Which plant does a Byzantine drug name refer to, and how far should we trust the answer?
 
-Materia Incerta takes plant names from John the Physician's *Therapeutics* and the candidate species suggested for them in the literature. For each name it produces:
+Modern readings of plant names in old pharmacy texts lean on dictionaries and glossaries that disagree. Lardos et al. (2024) replaced that with a systematic test. They compared each botanical detail in Dioscorides' description with modern flora descriptions of every candidate species, scored the fit, and did it by hand for 50 names.
 
-- **Candidate ranking:** each ancient botanical detail from Dioscorides is compared with each candidate's modern flora description, and the paper's formula turns the matches into Strong, Moderate or Weak.
-- **Stability:** feature categories are resampled 1,000 times to show how often each label and ranking holds.
-- **Compound ledger:** LOTUS compounds are labelled robust (reported for every candidate with data), ID-dependent, or no data.
+Materia Incerta automates that comparison with an LLM and adds two things the paper doesn't have:
 
-An LLM does the feature comparison with plant names masked. Its scores are benchmarked against the 1,213 published expert comparisons of Lardos et al. (2024).
+1. **How stable is the answer?** The evidence is resampled 1,000 times to show how often each candidate keeps its rank and label.
+2. **What depends on it?** Every candidate is joined to the LOTUS natural-products database. Each compound is then marked as found in all candidates, dependent on which plant is meant, or unknown.
 
-EthnoHack 2026, Track 1. See [`PRD.md`](PRD.md) for the product spec and [`AGENTS.md`](AGENTS.md) for the rules every contributor follows.
+**Example.** For *alyssos*, *Fibigia clypeata* fits Dioscorides' description strongly but has no modern medicinal uses in the sources checked. *Scutellaria galericulata* has the uses but fits weakly. Choosing by modern use would pick the worse botanical match.
 
-> **Status:** scaffold. The pipeline, tests and site run end to end on synthetic data. The Lardos files have not been downloaded or mapped yet (build step 1), so the deployed site has no results. Open decisions are in [`docs/open-questions.md`](docs/open-questions.md).
->
-> Screenshots of the site running on the synthetic demo dataset are in [`docs/screenshots/`](docs/screenshots/). None of the data shown is real.
+Built for EthnoHack 2026, Track 1.
 
-## What this is not
+## Status
 
-This is not a plant identification app, a drug discovery engine or a clinical tool.
+The pipeline, its tests and the site work end to end on synthetic data ([screenshots](docs/screenshots/)). The project hasn't been run on real data yet: the Lardos files still need to be downloaded and mapped, and no LLM provider has been chosen. Open decisions are in [docs/open-questions.md](docs/open-questions.md).
 
-Every compound result is a computational, unvalidated hypothesis. Nothing here is dosing, preparation or treatment advice.
-
-No ground truth exists for these identifications, so results are reported as agreement with published expert scoring, never as accuracy.
-
-## Repo layout
-
-```text
-pipeline/      Python pipeline (src/materia_incerta), tests, sources.toml
-client/        Next.js static site; reads only client/public/data/
-data/          raw/ and interim/ are never committed; cache/llm/ holds model responses
-docs/          open questions
-```
-
-Pipeline stages, in order, one module each: `ingest`, `reconcile`, `reproduce`, `score`, `aggregate`, `stability`, `chemistry`, `evaluate`, `export`.
-
-## Setup
+## Quick start
 
 Requires Python 3.11+ and Node 20.9+.
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
+python -m venv .venv && source .venv/bin/activate
 pip install -e "pipeline[dev]"
 npm --prefix client install
+
+pytest pipeline/tests                  # run the tests
+python -m materia_incerta demo         # run the whole pipeline on synthetic data
+npm --prefix client run dev            # view the site at http://localhost:3000
 ```
 
-## Commands
+The demo writes into the site's data folder. Run `python -m materia_incerta export` afterwards so it isn't committed.
+
+With the real data in place:
 
 ```bash
-python -m materia_incerta download        # fetch files listed in pipeline/sources.toml
-python -m materia_incerta run --all       # offline rebuild from the response cache
-pytest pipeline/tests                     # pipeline tests
-npm --prefix client run dev               # local site
-npm --prefix client run build             # static export to client/out/
+python -m materia_incerta download     # fetch the files listed in pipeline/sources.toml
+python -m materia_incerta run --all    # rebuild every result from cached model answers
 ```
 
-Other commands:
+## How it works
 
-| Command | What it does |
-| --- | --- |
-| `python -m materia_incerta run --stage <name>` | Run selected stages |
-| `python -m materia_incerta split` | Assign the 10 tuning and 40 held-out names once. Refuses to overwrite. Commit the file. |
-| `python -m materia_incerta score --names a,b` | Live LLM scoring into the cache, tuning names only. Needs `LLM_API_KEY` and `LLM_MODEL`, and a provider adapter. |
-| `python -m materia_incerta score --held-out-run --reason "..." --confirm-full-run` | The held-out run, logged to `pipeline/config/runs.jsonl` |
-| `python -m materia_incerta demo` | Export synthetic data to the site, with a red banner, for frontend work |
-| `python -m materia_incerta export` | Rewrite site JSON from interim tables. Run this after `demo` to restore the real export before committing. |
+- **Check against the paper first.** Before any model runs, the pipeline recomputes the paper's labels from its own expert scores, and stops if they don't match.
+- **Score the way the paper does.** Good is +2, partial +1, no match −2 and absent 0, averaged within each feature category. Matching categories minus conflicting ones gives Strong (5 or more), Moderate (3 to 4) or Weak.
+- **Hide the names.** Before the model sees a text, every Greek, Latin and common name for the plant and its candidates becomes `[PLANT]`. This includes spelling variants such as *khamaimelon* and *Chamaemelum*. A prompt with a name left in is refused.
+- **No quote, no match.** The model must quote both texts to claim a match, or the answer counts as absent.
+- **Rebuild from cache.** Every model answer is cached, so one command reproduces every number offline, byte for byte.
 
-`run --all` never calls a model. Model scores come only from `data/cache/llm/`, keyed on the model, the prompt version and the exact masked prompt. A missing response leaves that comparison unscored, or fails under `--strict-cache`.
-
-## Method
-
-The scoring follows Lardos et al. (2024), and `reproduce.py` checks it against the paper's own labels before any model work.
-
-| Match class | Score |
-| --- | --- |
-| Good | 2 |
-| Partial | 1 |
-| No match | -2 |
-| Absent | 0 |
-
-1. Scores are averaged within each of the 13 feature categories.
-2. Degree of congruence = categories with a positive mean minus categories with a negative mean.
-3. Strong at 5 or above, Moderate at 3 to 4, Weak below 3. Values between 4 and 5 are unresolved and raise an error ([Q1](docs/open-questions.md)).
-4. Botanical evidence only. Medicinal-use data is not in the score.
-
-Model comparisons see texts with every Greek, Latin, genus, species, synonym and common name for the plant and all its candidates replaced by `[PLANT]`. Matching ignores case and diacritics and covers transliteration variants such as *khamaimelon* and *Chamaemelum*. A prompt that still holds a name is refused.
-
-A model match must quote both texts verbatim, or it is recorded as absent.
+Each stage is one module in [`pipeline/src/materia_incerta/`](pipeline/src/materia_incerta/). The site is a static Next.js export in [`client/`](client/) that only reads the JSON the pipeline writes.
 
 ## Evaluation
 
-Prompts are tuned on 10 names, and results are reported on the other 40, split by historical name. The site's benchmark page shows, per partition:
+Prompts are tuned on 10 names and judged on the other 40, against the paper's 1,213 expert comparisons. We report:
 
-- Detail matching: weighted Cohen's kappa against always predicting "good"
-- Invented evidence: matches claimed on items experts marked absent
-- Candidate labels: exact and within-one-level agreement against always predicting "Moderate"
-- Top-candidate agreement against random order
-- Memorisation: masked against unmasked agreement
-- Stability: share of plants whose top candidate holds in at least 80% of resamples
-- Known failures
+- agreement on single details, labels and rankings, each against a naive baseline
+- how often the model claims a match the experts marked absent
+- a memorisation test, comparing agreement with names hidden and shown
 
-## Data sources and licences
+No one knows for certain which plants these are, so all of this measures agreement with the experts, not correctness.
 
-| Source | Used for | Licence | Republished here |
-| --- | --- | --- | --- |
-| Lardos A. et al. (2024). A systematic methodology to assess the identity of plants in historical texts: A case study based on the Byzantine pharmacy text John the Physician's Therapeutics. *Journal of Ethnopharmacology* 322: 117622. [doi:10.1016/j.jep.2023.117622](https://doi.org/10.1016/j.jep.2023.117622) | Names, Dioscorides descriptions, candidates, expert scores | Paper CC BY 4.0. Data licence **unconfirmed**. | IDs and scores only, until confirmed |
-| Govaerts R. et al. (2021). The World Checklist of Vascular Plants. *Scientific Data* 8: 215. [doi:10.1038/s41597-021-00997-6](https://doi.org/10.1038/s41597-021-00997-6) | Accepted names, synonyms, native range | CC BY 3.0 on the v10 deposit; confirm for the version used | IDs and derived flags |
-| Rutz A. et al. (2022). The LOTUS initiative for open knowledge management in natural products research. *eLife* 11: e70780. [doi:10.7554/eLife.70780](https://doi.org/10.7554/eLife.70780) | Compounds per species (InChIKey, DOI, class) | Confirm on the Zenodo record | Pending confirmation |
-| Beck's translation of Dioscorides, *De materia medica*, and two regional floras | Reach this project only through the Lardos files | Assumed copyrighted | No. Text is withheld from the site (`REPUBLISH_SOURCE_TEXT = False`). |
-| Kew Medicinal Plant Names Services | Manual name checks only | No bulk access | No |
+## Limitations
 
-- The Osbaldeston version of Dioscorides is not used.
-- Modern community knowledge from ethnobotanical sources is not extracted or republished.
-- Versions, URLs and checksums are pinned in [`pipeline/sources.toml`](pipeline/sources.toml) and recorded in `client/public/data/manifest.json`.
-- Nothing under `data/raw/` or `data/interim/` is committed.
-- Cached model responses may quote copyrighted text, so they are committed only once the licences allow.
+- Only the candidates suggested in the literature are compared. The true plant may not be among them.
+- A compound missing from LOTUS may be unstudied rather than absent.
+- Compound results are untested hypotheses, not evidence of any effect or of safety.
+- The results support expert judgment; they don't replace it.
 
-## Limits
+## Data
 
-- The true plant may be outside the suggested candidate list. 21 of the 130 taxa are missing from the two regional floras.
-- Details that Dioscorides gives only by comparison with another plant are flagged; they give no direct feature.
-- First-rank share measures sensitivity to which features are counted. It is not the probability that an identification is correct.
-- A compound missing from LOTUS is not absent from the plant.
-- The output supports philologists and botanists. It does not replace them.
+| Source | Used for | Licence |
+| --- | --- | --- |
+| Lardos et al. (2024) research data | Names, descriptions, candidates, expert scores | Paper CC BY 4.0; data licence unconfirmed |
+| World Checklist of Vascular Plants (WCVP) | Accepted names, synonyms, native range | CC BY 3.0 for v10; confirm for the version used |
+| LOTUS | Compounds reported per species | Confirm on the Zenodo record |
+
+The Dioscorides translation and the regional floras arrive inside the Lardos files. Their text stays off the site until their licences are confirmed. Downloaded and intermediate data are never committed. Versions and checksums are pinned in [`pipeline/sources.toml`](pipeline/sources.toml).
+
+## References
+
+- Lardos A. et al. (2024). A systematic methodology to assess the identity of plants in historical texts: A case study based on the Byzantine pharmacy text John the Physician's Therapeutics. *Journal of Ethnopharmacology* 322: 117622. [doi:10.1016/j.jep.2023.117622](https://doi.org/10.1016/j.jep.2023.117622)
+- Govaerts R. et al. (2021). The World Checklist of Vascular Plants, a continuously updated resource for exploring global plant diversity. *Scientific Data* 8: 215. [doi:10.1038/s41597-021-00997-6](https://doi.org/10.1038/s41597-021-00997-6)
+- Rutz A. et al. (2022). The LOTUS initiative for open knowledge management in natural products research. *eLife* 11: e70780. [doi:10.7554/eLife.70780](https://doi.org/10.7554/eLife.70780)
+
+## Contributing
+
+Read [PRD.md](PRD.md) for the spec and [AGENTS.md](AGENTS.md) for the working rules.
 
 ## Team
 
-To be listed (2 to 5 members).
+To be added.
