@@ -92,7 +92,7 @@ There is no server. The pipeline computes everything ahead of time, and the site
 | Layer | What it is |
 | --- | --- |
 | **Pipeline** | Python 3.11+ · pandas · NumPy · Pydantic 2 (every table and model response is validated) |
-| **Model** | Structured-output LLM, provider not chosen yet · response cache keyed on model, prompt version and masked prompt |
+| **Model** | [Nebius Token Factory](https://tokenfactory.nebius.com) through its OpenAI-compatible API · JSON-schema output · response cache keyed on model, prompt version and masked prompt |
 | **Site** | Next.js 16 static export · React 19 · TypeScript 5 (strict) · Tailwind CSS 4 · shadcn/ui-style components |
 | **Data** | Lardos et al. 2024 research data · WCVP · LOTUS |
 | **Tooling** | pytest · Playwright for screenshots · Vercel for deployment |
@@ -115,6 +115,9 @@ With the real data, once the URLs in `pipeline/sources.toml` are filled in:
 
 ```bash
 python -m materia_incerta download     # fetch Lardos, WCVP and LOTUS into data/raw/
+python -m materia_incerta split        # fix the tuning/held-out split, once
+export LLM_API_KEY=... LLM_MODEL=meta-llama/Llama-3.3-70B-Instruct
+python -m materia_incerta score --names <lemma>   # score tuning names on Nebius
 python -m materia_incerta run --all    # rebuild every result from cached model answers
 npm --prefix client run build          # static site in client/out/
 ```
@@ -132,7 +135,7 @@ All commands run as `python -m materia_incerta <command>`.
 | `demo` | Build the synthetic dataset, run the pipeline on it and load it into the site |
 | `export` | Rewrite the site JSON from the current tables. This also clears demo data. |
 | `split` | Assign the 10 tuning and 40 held-out names. Runs once and refuses to overwrite. |
-| `score --names a,b` | Live LLM scoring of tuning names into the cache. Needs `LLM_API_KEY`, `LLM_MODEL` and a provider adapter. |
+| `score --names a,b` | Live scoring of tuning names on Nebius, into the cache. Needs `LLM_API_KEY` and `LLM_MODEL`. |
 | `score --held-out-run --confirm-full-run --reason "..."` | The one held-out run, logged to `pipeline/config/runs.jsonl` |
 
 ## Demo mode
@@ -176,6 +179,7 @@ Materia-Incerta-/
 │   │   ├── reproduce.py           # recompute paper labels from expert scores
 │   │   ├── mask.py                # hide every plant name before scoring
 │   │   ├── score.py               # LLM comparison, evidence rule, response cache
+│   │   ├── llm.py                 # Nebius adapter (OpenAI-compatible API)
 │   │   ├── aggregate.py           # the paper's scoring formula
 │   │   ├── stability.py           # 1,000 seeded category resamples
 │   │   ├── chemistry.py           # LOTUS join and compound ledger
@@ -246,8 +250,11 @@ Labels recomputed from the paper's expert scores don't match the published ones.
 **`ThresholdGapError: DoC 4.5 falls between 4 and 5`**
 The paper doesn't say how these values are labelled, so the code refuses to guess. See [docs/open-questions.md](docs/open-questions.md), Q1.
 
-**`NotImplementedError: No LLM provider adapter yet`**
-No provider has been chosen. `run --all` still works without one, using only cached answers. A provider adapter needs one method: `complete_json(prompt, schema)`.
+**`error: set LLM_API_KEY and LLM_MODEL to score live`**
+Live scoring needs a Nebius API key and a model ID. Copy `.env.example` to `.env`, fill both in, and export them. `run --all` doesn't need them: it uses only cached answers.
+
+**`error: https://api.tokenfactory.nebius.com/v1/chat/completions returned HTTP 401`**
+The key is wrong or expired. Rate limits (429) and server errors (5xx) are retried automatically; other errors stop the run.
 
 **The site says "No results exported yet".**
 Nothing has been exported. Run `python -m materia_incerta run --all`, or `demo` for synthetic data.
@@ -258,7 +265,7 @@ Demo data is loaded. Run `python -m materia_incerta export` before committing.
 ## Honest scope notes
 
 - **Not yet run on real data.** The pipeline, tests and site work end to end on synthetic data only. The Lardos files need downloading and mapping first.
-- **No LLM provider yet.** Masking, the evidence rule and the cache are in place, but no live scoring has run.
+- **No live scoring yet.** Nebius is wired in and tested against a fake server, but no real scoring run has happened and the model isn't fixed yet.
 - **The true plant may be outside the list.** Only the candidates suggested in the literature are compared. 21 of the 130 taxa are missing from the two regional floras.
 - **Compounds are hypotheses.** Every compound result is computational and unvalidated. A compound missing from LOTUS may be unstudied rather than absent. Nothing here is dosing, preparation or treatment advice. Hazardous genera such as *Aristolochia*, *Conium*, *Hyoscyamus* and *Nerium* carry hazard labels.
 - **First-rank share is not a probability.** It shows how much the ranking depends on which features are counted, not the chance an identification is correct.

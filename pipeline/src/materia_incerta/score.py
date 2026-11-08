@@ -13,7 +13,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import os
 import re
 from collections.abc import Sequence
 from dataclasses import dataclass, field
@@ -82,17 +81,13 @@ class LLMClient(Protocol):
 
 
 def client_from_env() -> LLMClient:
-    """Build the live client. The provider has not been chosen yet.
+    """Build the live client: Nebius Token Factory (see llm.py).
 
-    When it is, implement an adapter with `complete_json` that requests
-    structured output for `schema`, and return it here. Keys come only from
-    LLM_API_KEY and LLM_MODEL.
+    Reads LLM_API_KEY, LLM_MODEL and optionally LLM_BASE_URL.
     """
-    if not os.environ.get("LLM_API_KEY") or not os.environ.get("LLM_MODEL"):
-        raise RuntimeError("set LLM_API_KEY and LLM_MODEL to score live")
-    raise NotImplementedError(
-        "No LLM provider adapter yet. The team has not chosen a provider (AGENTS.md)."
-    )
+    from .llm import client_from_env as _nebius
+
+    return _nebius()
 
 
 def response_schema() -> dict:
@@ -200,6 +195,9 @@ class ScoreReport:
     live_calls: int = 0
     missing: list[str] = field(default_factory=list)
     skipped_no_text: list[str] = field(default_factory=list)
+    #: Cached answers that failed schema validation. Kept in the cache for
+    #: audit, left unscored, and counted as failures in the benchmark.
+    invalid: list[str] = field(default_factory=list)
 
 
 def score_comparisons(
@@ -272,7 +270,12 @@ def score_comparisons(
             report.live_calls += 1
         else:
             report.cache_hits += 1
-        response = parse_response(entry.raw_response, request)
+        try:
+            response = parse_response(entry.raw_response, request)
+        except ValueError:
+            report.invalid.append(comp.comparison_id)
+            out.append(comp.model_copy(update={**_CLEARED, "cache_key": key}))
+            continue
         out.append(
             comp.model_copy(
                 update={

@@ -84,7 +84,11 @@ def _cmd_score(args: argparse.Namespace, paths: Paths) -> int:
         print("--held-out-run needs --reason (recorded in the run log)", file=sys.stderr)
         return 2
 
-    client = client_from_env()
+    try:
+        client = client_from_env()
+    except RuntimeError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
     names = tables.read_table(paths.interim, "historical_names")
     plants = tables.read_table(paths.interim, "dmm_plants")
     cands = tables.read_table(paths.interim, "candidates")
@@ -109,9 +113,11 @@ def _cmd_score(args: argparse.Namespace, paths: Paths) -> int:
             "unmasked": args.unmasked,
             "live_calls": report.live_calls,
             "cache_hits": report.cache_hits,
+            "invalid": len(report.invalid),
             "reason": args.reason,
         }, sort_keys=True) + "\n")
-    print(f"score: {report.live_calls} live calls, {report.cache_hits} cached")
+    print(f"score: {report.live_calls} live calls, {report.cache_hits} cached, "
+          f"{report.scored} valid, {len(report.invalid)} invalid answers")
     return 0
 
 
@@ -172,11 +178,12 @@ def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     paths = Paths.under(Path(args.root).resolve()) if args.root else Paths()
     from .ingest import IngestNotReady
+    from .llm import LLMError
     from .mask import MaskingError
     from .run import ReproductionFailed
 
     try:
         return args.func(args, paths)
-    except (IngestNotReady, ReproductionFailed, MaskingError, FileNotFoundError, NotImplementedError) as exc:
+    except (IngestNotReady, ReproductionFailed, MaskingError, FileNotFoundError, LLMError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1

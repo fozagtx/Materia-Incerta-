@@ -52,9 +52,18 @@ These choices are implemented and documented in `stability.py`. Confirm them bef
 
 `config.HAZARDOUS_GENERA` covers the four genera named in `AGENTS.md`. The domain lead should review the 130 candidate taxa for others once the data is in.
 
-## Q9. LLM provider
+## Q9. LLM model
 
-`score.client_from_env` raises `NotImplementedError` until a provider is chosen. Any adapter needs only `model` and `complete_json(prompt, schema) -> str`. The prompt in `score.PROMPT_TEMPLATE` is a draft (`PROMPT_VERSION = "draft-0"`) for tuning on the 10 tuning names.
+The provider is Nebius Token Factory (`llm.py`, OpenAI-compatible API). Which Nebius model to use is still open: it is set by `LLM_MODEL`, and the model ID becomes part of every cache key.
+
+`meta-llama/Llama-3.3-70B-Instruct` is a reasonable first choice, because Nebius lists it with structured-output support. Check the current model list first, since Nebius retires models.
+
+Two things to settle before the held-out run:
+
+- Pick one model and keep it for the whole benchmark.
+- Confirm whether the chosen model accepts `response_format: json_schema`. If it doesn't, the adapter falls back to JSON mode automatically. Either way, answers are validated against the schema.
+
+The prompt in `score.PROMPT_TEMPLATE` is a draft (`PROMPT_VERSION = "draft-0"`) for tuning on the 10 tuning names.
 
 ## Q10. Network access in cloud sessions
 

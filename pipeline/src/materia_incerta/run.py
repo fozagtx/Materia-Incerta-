@@ -134,7 +134,7 @@ def stage_score(ctx: RunContext, opts: RunOptions) -> None:
     scored, report = score_comparisons(comps, names, plants, cands, cache, model=model)
     tables.write_table(interim, "feature_comparisons", scored)
     ctx.say(f"score: {report.cache_hits} cached, {len(report.missing)} not yet scored, "
-            f"{len(report.skipped_no_text)} without text")
+            f"{len(report.invalid)} invalid answers, {len(report.skipped_no_text)} without text")
 
     cand_lemma = {c.candidate_key: c.lemma_tag for c in cands}
     scored_lemmas = {cand_lemma[c.candidate_key] for c in scored if c.model_class}

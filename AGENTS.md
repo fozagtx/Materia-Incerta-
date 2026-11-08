@@ -33,6 +33,7 @@ pipeline/
     reproduce.py           Recompute paper labels from expert scores
     mask.py                Remove plant names before scoring
     score.py               Run and cache LLM comparisons
+    llm.py                 Nebius adapter (OpenAI-compatible chat completions)
     aggregate.py           Apply the paper's scoring
     stability.py           Resample feature categories
     chemistry.py           Join LOTUS and build the compound ledger
@@ -71,9 +72,10 @@ npm --prefix client run build                   # Build the static site
 
 ## Tech stack
 
-These are working defaults. The team has not confirmed them, and the LLM provider has not been chosen.
+These are working defaults. The team has not confirmed them all.
 
 - **Pipeline:** Python, pandas, Pydantic, pytest
+- **LLM provider:** Nebius Token Factory, through its OpenAI-compatible API (`llm.py`). The model is set by `LLM_MODEL`.
 - **Model output:** structured output validated with Pydantic
 - **Site:** Next.js App Router static export, TypeScript, Tailwind CSS, shadcn/ui
 - **Deployment:** Vercel
@@ -141,7 +143,7 @@ Run `npm --prefix client run build` before finishing any site change.
 
 ## Security and data handling
 
-- Keep API keys in environment variables, using `LLM_API_KEY` and `LLM_MODEL`. Never commit `.env` files.
+- Keep API keys in environment variables, using `LLM_API_KEY` and `LLM_MODEL` (and optionally `LLM_BASE_URL`). Never commit `.env` files.
 - Never expose keys or model calls to the client.
 - Never commit `data/raw/` or `data/interim/`.
 - Treat the Beck translation, the regional floras and any cached response quoting them as copyrighted until their licences are confirmed.
