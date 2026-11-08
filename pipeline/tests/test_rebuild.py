@@ -108,3 +108,9 @@ def test_hazard_and_range_reach_the_site(demo_built):
     assert cands["demo-gamma|DEMO-03a|1"]["hazard"]
     assert cands["demo-gamma|DEMO-03b|1"]["in_east_med"] is False
     assert cands["demo-gamma|DEMO-03b|2"]["wcvp_id"] is None
+
+
+def test_demo_data_is_flagged_synthetic_even_without_the_flag(fresh_demo, offline):
+    run(fresh_demo, RunOptions(stages=REBUILD_STAGES))  # synthetic not passed
+    manifest = json.loads((fresh_demo.site_data / "manifest.json").read_text())
+    assert manifest["synthetic"] is True

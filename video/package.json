@@ -1,0 +1,25 @@
+{
+  "name": "materia-incerta-video",
+  "version": "0.1.0",
+  "private": true,
+  "description": "90-second pitch and demo video for Materia Incerta, built with Remotion.",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts MateriaIncerta out/materia-incerta-demo.mp4 --codec=h264 --crf=20",
+    "still": "remotion still src/index.ts MateriaIncerta out/still.png"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.541",
+    "@remotion/fonts": "4.0.541",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.541"
+  },
+  "devDependencies": {
+    "@fontsource/eb-garamond": "5.3.0",
+    "@fontsource/inter": "5.3.0",
+    "@fontsource/jetbrains-mono": "5.3.0",
+    "@types/react": "19.3.0",
+    "typescript": "5.9.3"
+  }
+}

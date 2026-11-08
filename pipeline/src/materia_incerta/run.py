@@ -235,7 +235,8 @@ def stage_export(ctx: RunContext, opts: RunOptions) -> None:
         sources=ctx.sources.manifest(),
         split=load_split(ctx.paths.split),
         scoring=_json(ctx.paths.scoring),
-        synthetic=opts.synthetic,
+        # The demo's sources.toml has a "demo" source; never export it unflagged.
+        synthetic=opts.synthetic or ctx.sources.get("demo") is not None,
     )
     counts = export_site(data, ctx.paths.site_data)
     ctx.say(f"export: {counts['names']} names to {ctx.paths.site_data}")

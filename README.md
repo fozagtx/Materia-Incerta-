@@ -19,7 +19,11 @@
 
 | |
 | --- |
-| [The problem](#the-problem) · [What it does](#what-materia-incerta-does) · [How it works](#how-it-works) · [Architecture](#architecture) · [Tech stack](#tech-stack) · [Quickstart](#quickstart) · [Commands](#commands) · [Demo mode](#demo-mode) · [Evaluation](#evaluation) · [Repository layout](#repository-layout) · [Checks](#checks) · [Data and licences](#data-and-licences) · [Troubleshooting](#troubleshooting) · [Scope notes](#honest-scope-notes) |
+| [Demo video](#demo-video) · [The problem](#the-problem) · [What it does](#what-materia-incerta-does) · [How it works](#how-it-works) · [Architecture](#architecture) · [Tech stack](#tech-stack) · [Quickstart](#quickstart) · [Commands](#commands) · [Demo mode](#demo-mode) · [Evaluation](#evaluation) · [Repository layout](#repository-layout) · [Checks](#checks) · [Data and licences](#data-and-licences) · [Troubleshooting](#troubleshooting) · [Scope notes](#honest-scope-notes) |
+
+## Demo video
+
+[**Watch the 90-second pitch and demo**](docs/video/materia-incerta-demo.mp4) (1080p, 13 MB). The model answers in it come from a live Nebius run on Dioscorides' Greek text and *Flora Europaea*, using [`pipeline/examples/alyssos_live.py`](pipeline/examples/alyssos_live.py). The video's source is in [`video/`](video/).
 
 ## The problem
 
@@ -173,6 +177,7 @@ Materia-Incerta-/
 │   │   ├── run.py · cli.py        # `python -m materia_incerta ...`
 │   │   ├── demo.py                # synthetic dataset for tests and the site
 │   │   └── config.py · schemas.py # constants, seed, Pydantic models
+│   ├── examples/alyssos_live.py   # live model check on real Dioscorides and flora texts
 │   └── tests/                     # pytest, on synthetic data only
 ├── client/
 │   ├── app/                       # name index · names/[lemma] · benchmark
@@ -182,7 +187,8 @@ Materia-Incerta-/
 │   ├── raw/                       # downloads, never committed
 │   ├── interim/                   # generated tables, never committed
 │   └── cache/llm/                 # cached model answers
-├── docs/                          # open questions, screenshots
+├── video/                         # Remotion source for the pitch video
+├── docs/                          # open questions, screenshots, rendered video
 ├── PRD.md                         # product spec
 └── AGENTS.md                      # working rules for contributors and coding agents
 ```

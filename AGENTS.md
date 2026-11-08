@@ -42,7 +42,9 @@ pipeline/
     run.py                 Run stages in order (`run --all`)
     demo.py                Synthetic dataset for tests and frontend work
     cli.py                 `python -m materia_incerta ...`
+  examples/alyssos_live.py Live model check on public-domain texts (not the benchmark)
   tests/                   Use the synthetic demo only, never real plant data
+video/                     Remotion pitch video; rendered file in docs/video/
 data/
   raw/                     Downloaded sources, never committed
   interim/                 Generated tables, never committed

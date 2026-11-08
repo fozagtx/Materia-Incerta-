@@ -1,0 +1,121 @@
+{
+  "model": "Qwen/Qwen3-235B-A22B-Instruct-2507",
+  "prompt_version": "draft-0",
+  "live_calls": 10,
+  "seconds": 13.7,
+  "run_at_utc": "2026-11-08 11:45:43",
+  "ancient_sentence": "ἄλυσσον φρυγάνιόν ἐστιν ὑπότραχυ, μονόκαυλον, φύλλα ἔχον στρογγύλα, παρ᾽ οἷς ὁ καρπὸς ὡς ἀσπιδίσκια διπλᾶ, ἐν οἷς τὸ σπέρμα ὑπόπλατυ· φύεται ἐν ὀρεινοῖς καὶ τραχέσι χωρίοις.",
+  "ancient_sentence_masked": "[PLANT] φρυγάνιόν ἐστιν ὑπότραχυ, μονόκαυλον, φύλλα ἔχον στρογγύλα, παρ᾽ οἷς ὁ καρπὸς ὡς ἀσπιδίσκια διπλᾶ, ἐν οἷς τὸ σπέρμα ὑπόπλατυ· φύεται ἐν ὀρεινοῖς καὶ τραχέσι χωρίοις.",
+  "results": [
+    {
+      "candidate": "Fibigia clypeata",
+      "category": "habit",
+      "ancient_greek": "φρυγάνιόν ἐστιν ὑπότραχυ, μονόκαυλον",
+      "ancient_gloss": "a small, somewhat rough shrub with a single stem",
+      "match_class": "absent",
+      "reason": "[coerced from partial: modern quote not found in text] The ancient description mentions the plant as 'ὑπότραχυ' (somewhat rough) and 'μονόκαυλον' (single-stemmed), which refers to surface texture and stem structure. The modern description notes 'hairs stellate, rarely mixed with some unbranched hairs' and 'stems 30-75 cm', indicating a hairy surface and stem height, but does not confirm single-stemmed habit. There is partial overlap in describing the stem and texture, but the modern text adds detail not present in the ancient one, and does not confirm 'single-stemmed'.",
+      "ancient_quote": null,
+      "modern_quote": null,
+      "cache_key": "34047fcc69ef8394b1ff5b0a310f8b5ec92be18b446847fd2f302905db9200fe"
+    },
+    {
+      "candidate": "Fibigia clypeata",
+      "category": "leaves",
+      "ancient_greek": "φύλλα ἔχον στρογγύλα",
+      "ancient_gloss": "round leaves",
+      "match_class": "no_match",
+      "reason": "The ancient description states the leaves are 'στρογγύλα' (round), while the modern description specifies the lower leaves as 'oblong or oblanceolate', which are elongated shapes, not round. These forms are morphologically distinct and contradictory.",
+      "ancient_quote": "στρογγύλα",
+      "modern_quote": "oblong or oblanceolate",
+      "cache_key": "89bbb79e527d63219157b80a6c1bc38938a58b3495b6f30865f28b2022459390"
+    },
+    {
+      "candidate": "Fibigia clypeata",
+      "category": "fruit",
+      "ancient_greek": "παρ᾽ οἷς ὁ καρπὸς ὡς ἀσπιδίσκια διπλᾶ",
+      "ancient_gloss": "fruit like little double shields",
+      "match_class": "partial",
+      "reason": "The ancient description mentions the fruit being 'like small shields, double', which may refer to a flattened, round shape and possibly a two-part structure. The modern description identifies the fruit as a 'strongly compressed latiseptate silicula', which is flat and typically two-valved, aligning partially with the 'shield-like' and 'double' idea. However, the ancient term is metaphorical and lacks botanical precision, while the modern one is technical. Thus, there is overlap in form (flat, two-parted) but not exact correspondence in detail or terminology.",
+      "ancient_quote": "ὁ καρπὸς ὡς ἀσπιδίσκια διπλᾶ",
+      "modern_quote": "Fruit a strongly compressed latiseptate silicula",
+      "cache_key": "d37598f82f012a24b0147102918a5e40e5fe59eb863a9043a549f296f44e68a0"
+    },
+    {
+      "candidate": "Fibigia clypeata",
+      "category": "seed",
+      "ancient_greek": "ἐν οἷς τὸ σπέρμα ὑπόπλατυ",
+      "ancient_gloss": "a flattish seed inside",
+      "match_class": "partial",
+      "reason": "The ancient description states that the seed is 'ὑπόπλατυ', meaning 'flattened' or 'broad and flat', which refers to the shape of the seed. The modern description mentions that the seeds are 'winged', which implies a flattened structure due to the presence of wings, but does not explicitly state that the seed itself is broadly flattened. Thus, there is partial overlap in the morphological implication, but the focus differs: one on general flattening, the other on the presence of wings which may cause flattening.",
+      "ancient_quote": "ὑπόπλατυ",
+      "modern_quote": "winged",
+      "cache_key": "30a93de08a22a705e6eaf4f846fda4339c760ec2476a655083bc2c4d433a0350"
+    },
+    {
+      "candidate": "Fibigia clypeata",
+      "category": "habitat",
+      "ancient_greek": "φύεται ἐν ὀρεινοῖς καὶ τραχέσι χωρίοις",
+      "ancient_gloss": "grows in mountainous, rough places",
+      "match_class": "partial",
+      "reason": "The ancient description mentions the plant grows in mountainous and rough places ('φύεται ἐν ὀρεινοῖς καὶ τραχέσι χωρίοις'), which refers to physical terrain. The modern description specifies geographic regions (Italy, Balkan peninsula, etc.) but does not directly confirm mountainous or rough terrain, though some of these areas may include such habitats. Thus, there is partial overlap in habitat description but not full correspondence.",
+      "ancient_quote": "φύεται ἐν ὀρεινοῖς καὶ τραχέσι χωρίοις",
+      "modern_quote": "Italy; Balkan peninsula southwards to N.E. Greece; Krym.",
+      "cache_key": "c719ae954f3681ed0bda11e6712e2767652480394110ea1041f306760c4ac395"
+    },
+    {
+      "candidate": "Scutellaria galericulata",
+      "category": "habit",
+      "ancient_greek": "φρυγάνιόν ἐστιν ὑπότραχυ, μονόκαυλον",
+      "ancient_gloss": "a small, somewhat rough shrub with a single stem",
+      "match_class": "partial",
+      "reason": "The ancient description mentions 'μονόκαυλον' (single-stemmed), which suggests a simple, unbranched stem. The modern description states 'Stems 7-70 cm, more or less erect, simple or branched', allowing for both simple and branched forms. Thus, there is overlap in the possibility of a simple stem, but the modern account includes branching, which is not consistent with a strict interpretation of 'μονόκαυλον'. The surface texture 'ὑπότραχυ' (somewhat rough) is not addressed in the modern text, so no match can be made on that trait.",
+      "ancient_quote": "μονόκαυλον",
+      "modern_quote": "simple or branched",
+      "cache_key": "25e9d3273e9f4567bd2457b64c239bb75943a579d91ce18491647bdd78a48104"
+    },
+    {
+      "candidate": "Scutellaria galericulata",
+      "category": "leaves",
+      "ancient_greek": "φύλλα ἔχον στρογγύλα",
+      "ancient_gloss": "round leaves",
+      "match_class": "no_match",
+      "reason": "The ancient description states the leaves are 'στρογγύλα' (round), while the modern description specifies the leaves as 'ovate-elliptical to oblong-lanceolate', which are not round. These shapes are morphologically distinct, indicating a contradiction.",
+      "ancient_quote": "στρογγύλα",
+      "modern_quote": "ovate-elliptical to oblong-lanceolate",
+      "cache_key": "503aebe36b7b25b27795485aeae13087bb6eb999ebba4111ea6fec0a819afcd7"
+    },
+    {
+      "candidate": "Scutellaria galericulata",
+      "category": "fruit",
+      "ancient_greek": "παρ᾽ οἷς ὁ καρπὸς ὡς ἀσπιδίσκια διπλᾶ",
+      "ancient_gloss": "fruit like little double shields",
+      "match_class": "absent",
+      "reason": "The ancient description mentions the fruit being 'like small shields, double', which refers to the shape and structure of the fruit. The modern description does not explicitly describe the fruit's morphology, focusing instead on other plant parts such as flowers, leaves, stems, and habitat. Since the modern text lacks any direct reference to the fruit's form, a comparison cannot be made.",
+      "ancient_quote": null,
+      "modern_quote": null,
+      "cache_key": "1afec322a840bd8902d0da7b419a8dbf3a2c8cb3da3ceccce2d0ce471c328310"
+    },
+    {
+      "candidate": "Scutellaria galericulata",
+      "category": "seed",
+      "ancient_greek": "ἐν οἷς τὸ σπέρμα ὑπόπλατυ",
+      "ancient_gloss": "a flattish seed inside",
+      "match_class": "absent",
+      "reason": "The ancient description mentions 'ἐν οἷς τὸ σπέρμα ὑπόπλατυ' (in which the seed is flattened from below), directly addressing the seed's shape. The modern description does not mention seed morphology at all, focusing instead on vegetative and floral characteristics. Since one description lacks any reference to the seed feature, the match is classified as 'absent'.",
+      "ancient_quote": null,
+      "modern_quote": null,
+      "cache_key": "bdb16276925bf76723e28c38bede672e805a24aa7ef05e2577de7a9099b673e9"
+    },
+    {
+      "candidate": "Scutellaria galericulata",
+      "category": "habitat",
+      "ancient_greek": "φύεται ἐν ὀρεινοῖς καὶ τραχέσι χωρίοις",
+      "ancient_gloss": "grows in mountainous, rough places",
+      "match_class": "no_match",
+      "reason": "The ancient description states the plant grows in mountainous and rough places (φύεται ἐν ὀρεινοῖς καὶ τραχέσι χωρίοις), while the modern description specifies damp places. These habitats are ecologically distinct, with 'mountainous and rough' implying well-drained, rocky, upland areas, whereas 'damp places' suggests moist or wet lowland habitats. This constitutes a direct contradiction in habitat preference.",
+      "ancient_quote": "φύεται ἐν ὀρεινοῖς καὶ τραχέσι χωρίοις",
+      "modern_quote": "Damp places",
+      "cache_key": "eb9ab8b404029552a5cfd35132f237c1cd80e60e2d48f17108df3b1dec57533a"
+    }
+  ]
+}

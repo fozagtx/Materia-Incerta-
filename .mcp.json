@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "hackathon-playbook": {
+      "type": "http",
+      "url": "https://thehackathonplaybook.dev/api/mcp"
+    }
+  }
+}
