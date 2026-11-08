@@ -51,29 +51,14 @@ For *alyssos*, *Fibigia clypeata* fits Dioscorides' description strongly but has
 ## Architecture
 
 ```mermaid
-flowchart TB
-    subgraph SRC["Sources · data/raw/"]
-        L["Lardos et al. 2024<br/>names · descriptions · candidates · expert scores"]
-        W["WCVP<br/>accepted names · synonyms · native range"]
-        LO["LOTUS<br/>compounds per species"]
-    end
-
-    subgraph PIPE["pipeline/ · Python"]
-        I["ingest"] --> R["reconcile<br/>WCVP IDs"]
-        R --> RP["reproduce<br/>paper labels must match"]
-        RP --> S["mask + score<br/>LLM, cached in data/cache/llm/"]
-        S --> A["aggregate<br/>paper formula"]
-        A --> ST["stability<br/>1,000 resamples"]
-        ST --> C["chemistry<br/>compound ledger"]
-        C --> E["evaluate<br/>agreement with experts"]
-        E --> X["export"]
-    end
-
-    L --> I
-    W --> R
-    LO --> C
-    X --> J[("client/public/data/<br/>JSON")]
-    J --> SITE["client/ · Next.js static site<br/>name index · plant case · benchmark and limits"]
+flowchart LR
+    L["Lardos et al. 2024<br/>names · descriptions<br/>expert scores"] --> P1
+    W["WCVP<br/>names · synonyms<br/>native range"] --> P1
+    P1["① Load and check<br/>match species to WCVP<br/>reproduce paper labels"] --> P2["② Score<br/>hide plant names<br/>Nebius LLM · answers saved"]
+    P2 --> P3["③ Measure<br/>paper formula<br/>1,000 resamples"]
+    P3 --> P4["④ Chemistry<br/>compound ledger"]
+    LO["LOTUS<br/>compounds per species"] --> P4
+    P4 --> S["Static site<br/>names · plant cases<br/>benchmark"]
 ```
 
 **Scoring**, exactly as in the paper:
@@ -92,7 +77,7 @@ There is no server. The pipeline computes everything ahead of time, and the site
 | Layer | What it is |
 | --- | --- |
 | **Pipeline** | Python 3.11+ · pandas · NumPy · Pydantic 2 (every table and model response is validated) |
-| **Model** | [Nebius Token Factory](https://tokenfactory.nebius.com) through its OpenAI-compatible API · JSON-schema output · response cache keyed on model, prompt version and masked prompt |
+| **Model** | [Nebius Token Factory](https://tokenfactory.nebius.com), tested with Qwen3-235B. Every model answer is saved, so all results can be rebuilt without calling the model again. |
 | **Site** | Next.js 16 static export · React 19 · TypeScript 5 (strict) · Tailwind CSS 4 · shadcn/ui-style components |
 | **Data** | Lardos et al. 2024 research data · WCVP · LOTUS |
 | **Tooling** | pytest · Playwright for screenshots · Vercel for deployment |
