@@ -56,7 +56,7 @@ These choices are implemented and documented in `stability.py`. Confirm them bef
 
 The provider is Nebius Token Factory (`llm.py`, OpenAI-compatible API). Which Nebius model to use is still open: it is set by `LLM_MODEL`, and the model ID becomes part of every cache key.
 
-`meta-llama/Llama-3.3-70B-Instruct` is a reasonable first choice, because Nebius lists it with structured-output support. Check the current model list first, since Nebius retires models.
+`Qwen/Qwen3-235B-A22B-Instruct-2507` is the model the adapter was tested with live. It accepted `response_format: json_schema`, and all 52 test answers were valid. Nebius retires models, so list the current ones (`GET /v1/models`) before fixing the choice. Llama 3.3 70B, for example, is no longer offered.
 
 Two things to settle before the held-out run:
 

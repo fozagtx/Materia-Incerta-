@@ -116,7 +116,7 @@ With the real data, once the URLs in `pipeline/sources.toml` are filled in:
 ```bash
 python -m materia_incerta download     # fetch Lardos, WCVP and LOTUS into data/raw/
 python -m materia_incerta split        # fix the tuning/held-out split, once
-export LLM_API_KEY=... LLM_MODEL=meta-llama/Llama-3.3-70B-Instruct
+export LLM_API_KEY=... LLM_MODEL=Qwen/Qwen3-235B-A22B-Instruct-2507
 python -m materia_incerta score --names <lemma>   # score tuning names on Nebius
 python -m materia_incerta run --all    # rebuild every result from cached model answers
 npm --prefix client run build          # static site in client/out/
@@ -265,7 +265,7 @@ Demo data is loaded. Run `python -m materia_incerta export` before committing.
 ## Honest scope notes
 
 - **Not yet run on real data.** The pipeline, tests and site work end to end on synthetic data only. The Lardos files need downloading and mapping first.
-- **No live scoring yet.** Nebius is wired in and tested against a fake server, but no real scoring run has happened and the model isn't fixed yet.
+- **No real data scored yet.** Nebius is wired in and was tested live on synthetic data with `Qwen/Qwen3-235B-A22B-Instruct-2507`: 52 calls, all answers schema-valid, rebuilt offline from the cache. The model for the benchmark isn't fixed yet.
 - **The true plant may be outside the list.** Only the candidates suggested in the literature are compared. 21 of the 130 taxa are missing from the two regional floras.
 - **Compounds are hypotheses.** Every compound result is computational and unvalidated. A compound missing from LOTUS may be unstudied rather than absent. Nothing here is dosing, preparation or treatment advice. Hazardous genera such as *Aristolochia*, *Conium*, *Hyoscyamus* and *Nerium* carry hazard labels.
 - **First-rank share is not a probability.** It shows how much the ranking depends on which features are counted, not the chance an identification is correct.

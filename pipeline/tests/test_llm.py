@@ -25,7 +25,7 @@ class FakeTransport:
 
 
 def client(transport, **kw):
-    return OpenAICompatibleClient(model="meta-llama/Llama-3.3-70B-Instruct", api_key="sk-test",
+    return OpenAICompatibleClient(model="Qwen/Qwen3-235B-A22B-Instruct-2507", api_key="sk-test",
                                   transport=transport, sleep=lambda s: None, **kw)
 
 
@@ -36,7 +36,7 @@ def test_request_shape():
     url, headers, payload = t.calls[0]
     assert url == f"{NEBIUS_BASE_URL}/chat/completions"
     assert headers["Authorization"] == "Bearer sk-test"
-    assert payload["model"] == "meta-llama/Llama-3.3-70B-Instruct"
+    assert payload["model"] == "Qwen/Qwen3-235B-A22B-Instruct-2507"
     assert payload["messages"] == [{"role": "user", "content": "compare these"}]
     assert payload["temperature"] == 0.0
     assert payload["response_format"]["type"] == "json_schema"

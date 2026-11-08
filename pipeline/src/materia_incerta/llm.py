@@ -5,7 +5,7 @@ Only `score.py` calls this, and only from `python -m materia_incerta score`.
 
 Configuration, all from the environment:
 - LLM_API_KEY   bearer key (secret, never logged)
-- LLM_MODEL     model ID as Nebius lists it, e.g. meta-llama/Llama-3.3-70B-Instruct
+- LLM_MODEL     model ID as Nebius lists it, e.g. Qwen/Qwen3-235B-A22B-Instruct-2507
 - LLM_BASE_URL  optional, defaults to Nebius Token Factory
 
 Any other OpenAI-compatible endpoint works by changing LLM_BASE_URL.
@@ -140,7 +140,7 @@ def client_from_env(env: dict[str, str] | None = None) -> OpenAICompatibleClient
     if not key or not model:
         raise RuntimeError(
             "set LLM_API_KEY and LLM_MODEL to score live "
-            "(LLM_MODEL is a Nebius model ID, e.g. meta-llama/Llama-3.3-70B-Instruct)"
+            "(LLM_MODEL is a Nebius model ID, e.g. Qwen/Qwen3-235B-A22B-Instruct-2507)"
         )
     return OpenAICompatibleClient(
         model=model,
