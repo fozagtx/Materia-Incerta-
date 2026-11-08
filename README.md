@@ -13,6 +13,8 @@ An LLM does the feature comparison with plant names masked. Its scores are bench
 EthnoHack 2026, Track 1. See [`PRD.md`](PRD.md) for the product spec and [`AGENTS.md`](AGENTS.md) for the rules every contributor follows.
 
 > **Status:** scaffold. The pipeline, tests and site run end to end on synthetic data. The Lardos files have not been downloaded or mapped yet (build step 1), so the deployed site has no results. Open decisions are in [`docs/open-questions.md`](docs/open-questions.md).
+>
+> Screenshots of the site running on the synthetic demo dataset are in [`docs/screenshots/`](docs/screenshots/). None of the data shown is real.
 
 ## What this is not
 
