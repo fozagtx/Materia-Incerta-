@@ -1,0 +1,81 @@
+# Download manifest. One entry per dataset; one [[...files]] row per file.
+#
+# - role:     how the pipeline finds the file (do not rename once used)
+# - path:     where it lands, relative to data/raw/
+# - url:      left blank until the exact file is confirmed; `download` skips blanks
+# - sha256:   pin after the first download so a changed upstream file fails loudly
+#
+# Adding a dataset or changing a version needs team sign-off (AGENTS.md).
+# Nothing under data/raw/ is ever committed.
+
+[sources.lardos]
+title = "Lardos et al. (2024) research data"
+citation = "Lardos A. et al. (2024). A systematic methodology to assess the identity of plants in historical texts: A case study based on the Byzantine pharmacy text John the Physician's Therapeutics. Journal of Ethnopharmacology 322: 117622. doi:10.1016/j.jep.2023.117622"
+version = ""
+licence = "Paper CC BY 4.0. Data licence unconfirmed."
+licence_confirmed = false
+republish = false
+notes = "11 data files. The PRD names files 2, 3, 5, 6, 9 and 11 for ingest. Contains text from the Beck translation and two regional floras: treat as copyrighted."
+
+[[sources.lardos.files]]
+role = "lardos_file_02"
+path = "lardos/data_file_02"
+url = ""
+
+[[sources.lardos.files]]
+role = "lardos_file_03"
+path = "lardos/data_file_03"
+url = ""
+
+[[sources.lardos.files]]
+role = "lardos_file_05"
+path = "lardos/data_file_05"
+url = ""
+
+[[sources.lardos.files]]
+role = "lardos_file_06"
+path = "lardos/data_file_06"
+url = ""
+
+[[sources.lardos.files]]
+role = "lardos_file_09"
+path = "lardos/data_file_09"
+url = ""
+
+[[sources.lardos.files]]
+role = "lardos_file_11"
+path = "lardos/data_file_11"
+url = ""
+
+[sources.wcvp]
+title = "World Checklist of Vascular Plants (WCVP)"
+citation = "Govaerts R., Nic Lughadha E., Black N., Turner R., Paton A. (2021). The World Checklist of Vascular Plants, a continuously updated resource for exploring global plant diversity. Scientific Data 8: 215. doi:10.1038/s41597-021-00997-6"
+version = ""
+licence = "CC BY 3.0 on the v10 deposit; confirm for the version used."
+licence_confirmed = false
+republish = true
+notes = "Pin one snapshot. Accepted names, synonyms and native range."
+
+[[sources.wcvp.files]]
+role = "wcvp_names"
+path = "wcvp/wcvp_names.csv"
+url = ""
+
+[[sources.wcvp.files]]
+role = "wcvp_distribution"
+path = "wcvp/wcvp_distribution.csv"
+url = ""
+
+[sources.lotus]
+title = "LOTUS natural products occurrences, frozen export"
+citation = "Rutz A. et al. (2022). The LOTUS initiative for open knowledge management in natural products research. eLife 11: e70780. doi:10.7554/eLife.70780"
+version = ""
+licence = "Confirm on the Zenodo record."
+licence_confirmed = false
+republish = false
+notes = "Frozen CSV on Zenodo (April 2026 export per the PRD). Missing records do not mean a compound is absent."
+
+[[sources.lotus.files]]
+role = "lotus"
+path = "lotus/lotus_frozen.csv"
+url = ""

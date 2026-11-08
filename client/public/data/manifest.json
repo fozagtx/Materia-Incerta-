@@ -1,0 +1,71 @@
+{
+  "constants": {
+    "east_med_areas": [
+      "CYP",
+      "EAI",
+      "EGY",
+      "GRC",
+      "KRI",
+      "LBS",
+      "PAL",
+      "SIN",
+      "TUE",
+      "TUR"
+    ],
+    "lotus_min_records": 5,
+    "match_scores": {
+      "absent": 0,
+      "good": 2,
+      "no_match": -2,
+      "partial": 1
+    },
+    "moderate_max": 4,
+    "moderate_min": 3,
+    "n_resamples": 1000,
+    "random_seed": 20240301,
+    "stable_top_share": 0.8,
+    "strong_min": 5
+  },
+  "counts": {
+    "candidates": 0,
+    "comparisons": 0,
+    "dmm_plants": 0,
+    "names": 0
+  },
+  "pipeline_version": "0.1.0",
+  "scoring": null,
+  "sources": [
+    {
+      "citation": "Lardos A. et al. (2024). A systematic methodology to assess the identity of plants in historical texts: A case study based on the Byzantine pharmacy text John the Physician's Therapeutics. Journal of Ethnopharmacology 322: 117622. doi:10.1016/j.jep.2023.117622",
+      "key": "lardos",
+      "licence": "Paper CC BY 4.0. Data licence unconfirmed.",
+      "licence_confirmed": false,
+      "notes": "11 data files. The PRD names files 2, 3, 5, 6, 9 and 11 for ingest. Contains text from the Beck translation and two regional floras: treat as copyrighted.",
+      "republish": false,
+      "title": "Lardos et al. (2024) research data",
+      "version": null
+    },
+    {
+      "citation": "Govaerts R., Nic Lughadha E., Black N., Turner R., Paton A. (2021). The World Checklist of Vascular Plants, a continuously updated resource for exploring global plant diversity. Scientific Data 8: 215. doi:10.1038/s41597-021-00997-6",
+      "key": "wcvp",
+      "licence": "CC BY 3.0 on the v10 deposit; confirm for the version used.",
+      "licence_confirmed": false,
+      "notes": "Pin one snapshot. Accepted names, synonyms and native range.",
+      "republish": true,
+      "title": "World Checklist of Vascular Plants (WCVP)",
+      "version": null
+    },
+    {
+      "citation": "Rutz A. et al. (2022). The LOTUS initiative for open knowledge management in natural products research. eLife 11: e70780. doi:10.7554/eLife.70780",
+      "key": "lotus",
+      "licence": "Confirm on the Zenodo record.",
+      "licence_confirmed": false,
+      "notes": "Frozen CSV on Zenodo (April 2026 export per the PRD). Missing records do not mean a compound is absent.",
+      "republish": false,
+      "title": "LOTUS natural products occurrences, frozen export",
+      "version": null
+    }
+  ],
+  "synthetic": false,
+  "text_withheld": true
+}
