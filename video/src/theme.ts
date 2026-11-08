@@ -1,3 +1,5 @@
+import timing from "./data/voiceover.json";
+
 // Flat colours only. No gradients anywhere in this video.
 export const C = {
   paper: "#F3EFE6",
@@ -30,18 +32,11 @@ export const FPS = 30;
 export const W = 1920;
 export const H = 1080;
 
-// Scene lengths in frames (30 fps). Total = 2700 = 90 s.
+// Scene lengths in frames (30 fps), total 2700 = 90 s. They come from the voiceover
+// timing (scripts/voiceover.py) so each narration line fits its scene.
 // Order follows Klaff's Pitch Anything: frame, story, intrigue, idea, proof, prize, hookpoint.
-export const SCENES = [
-  { id: "question", frames: 240 },
-  { id: "stakes", frames: 330 },
-  { id: "twist", frames: 300 },
-  { id: "idea", frames: 240 },
-  { id: "how", frames: 420 },
-  { id: "live", frames: 330 },
-  { id: "result", frames: 330 },
-  { id: "prize", frames: 240 },
-  { id: "next", frames: 270 },
-] as const;
+export const SCENES = timing.scenes.map((s) => ({ id: s.id as SceneId, frames: s.frames }));
+
+export type SceneId = "question" | "stakes" | "twist" | "idea" | "how" | "live" | "result" | "prize" | "next";
 
 export const TOTAL = SCENES.reduce((n, s) => n + s.frames, 0);

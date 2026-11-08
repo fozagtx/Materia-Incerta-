@@ -1,0 +1,61 @@
+{
+  "voice": "af_heart",
+  "fps": 30,
+  "totalFrames": 2700,
+  "scenes": [
+    {
+      "id": "question",
+      "frames": 251,
+      "voiceStartFrame": 10,
+      "voiceSeconds": 6.61
+    },
+    {
+      "id": "stakes",
+      "frames": 373,
+      "voiceStartFrame": 10,
+      "voiceSeconds": 10.79
+    },
+    {
+      "id": "twist",
+      "frames": 334,
+      "voiceStartFrame": 10,
+      "voiceSeconds": 9.51
+    },
+    {
+      "id": "idea",
+      "frames": 215,
+      "voiceStartFrame": 10,
+      "voiceSeconds": 5.74
+    },
+    {
+      "id": "how",
+      "frames": 357,
+      "voiceStartFrame": 10,
+      "voiceSeconds": 10.26
+    },
+    {
+      "id": "live",
+      "frames": 302,
+      "voiceStartFrame": 10,
+      "voiceSeconds": 8.53
+    },
+    {
+      "id": "result",
+      "frames": 351,
+      "voiceStartFrame": 10,
+      "voiceSeconds": 10.09
+    },
+    {
+      "id": "prize",
+      "frames": 201,
+      "voiceStartFrame": 10,
+      "voiceSeconds": 5.27
+    },
+    {
+      "id": "next",
+      "frames": 316,
+      "voiceStartFrame": 10,
+      "voiceSeconds": 8.81
+    }
+  ]
+}

@@ -14,11 +14,22 @@ Every model answer in the video comes from one live run of [`pipeline/examples/a
 
 The expert labels (Strong and Weak) come from Lardos et al. (2024). The five-detail run is a demonstration, not the benchmark.
 
+## Voiceover
+
+The narration is generated with [Kokoro TTS](https://github.com/thewh1teagle/kokoro-onnx) (Kokoro-82M, Apache-2.0, voice `af_heart`) from [`src/data/narration.json`](src/data/narration.json). That file also fixes the pronunciation of names the default phonemizer gets wrong (Dioscorides, *Fibigia*, *alyssos*, Qwen, Nebius, Materia Incerta).
+
+```bash
+pip install kokoro-onnx soundfile
+python video/scripts/voiceover.py --models /path/to/kokoro-models
+```
+
+The models folder needs `kokoro-v1.0.onnx` and `voices-v1.0.bin` from the [kokoro-onnx model release](https://github.com/thewh1teagle/kokoro-onnx/releases/tag/model-files-v1.0). The script writes `public/audio/voiceover.wav` (not committed) and `src/data/voiceover.json`. Scene lengths follow the voice, and the total stays 90 seconds. Without the audio file, the video renders silent.
+
 ## Render
 
 ```bash
 npm --prefix video install
-npm --prefix video run render        # writes video/out/materia-incerta-demo.mp4
+npm --prefix video run render -- --audio-codec=aac   # writes video/out/materia-incerta-demo.mp4
 npm --prefix video run studio        # preview and scrub in the browser
 ```
 

@@ -1,0 +1,28 @@
+{
+  "voice": "af_heart",
+  "speed": 1.0,
+  "fps": 30,
+  "totalFrames": 2700,
+  "leadSeconds": 0.35,
+  "tailSeconds": 0.75,
+  "pronunciations": {
+    "Materia Incerta": "mətˈɪɹiə ɪntʃˈɛɹtə",
+    "Dioscorides'": "daɪˌɑːskˈɔːɹɪdiːz",
+    "Scutellaria": "skuːtɪlˈɛɹiə",
+    "Fibigia": "fɪbˈɪɡiə",
+    "alyssos": "ælˈɪsɑːs",
+    "Nebius": "nˈɛbiəs",
+    "Qwen": "tʃwˈɛn"
+  },
+  "scenes": [
+    { "id": "question", "minFrames": 240, "text": "In thirteenth-century Byzantium, a physician's handbook prescribes a drug called alyssos. Which plant is that?" },
+    { "id": "stakes", "minFrames": 300, "text": "Modern readings rest on dictionaries that disagree, so a lab can test the wrong species. In twenty twenty-four, experts scored fifty names by hand, one label each." },
+    { "id": "twist", "minFrames": 260, "text": "For alyssos, they rated Fibigia a strong fit, and Scutellaria a weak one. Pick the plant with a known use, and you pick the one that fits the text less well." },
+    { "id": "idea", "minFrames": 180, "text": "Materia Incerta shows how sure an identification is, and which compounds survive the doubt." },
+    { "id": "how", "minFrames": 340, "text": "First, every plant name is hidden. Then a language model compares each ancient detail with a modern flora, and it has to quote both texts, or the match doesn't count." },
+    { "id": "live", "minFrames": 220, "text": "Here it is, live. Ten comparisons on Dioscorides' original Greek, answered by Qwen three on Nebius in under fourteen seconds." },
+    { "id": "result", "minFrames": 240, "text": "Blind to the names, the model gives Fibigia three partial fits and one conflict, and Scutellaria one fit and two conflicts. The same direction as the experts." },
+    { "id": "prize", "minFrames": 150, "text": "For every name, a ranked list with its evidence, how stable it is, and which compounds hold." },
+    { "id": "next", "minFrames": 220, "text": "Next, all fifty names against the expert benchmark. Materia Incerta: lab time for the compounds that survive identification doubt." }
+  ]
+}
