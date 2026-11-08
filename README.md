@@ -19,11 +19,7 @@
 
 | |
 | --- |
-| [Demo video](#demo-video) · [The problem](#the-problem) · [What it does](#what-materia-incerta-does) · [How it works](#how-it-works) · [Architecture](#architecture) · [Tech stack](#tech-stack) · [Quickstart](#quickstart) · [Commands](#commands) · [Demo mode](#demo-mode) · [Evaluation](#evaluation) · [Repository layout](#repository-layout) · [Checks](#checks) · [Data and licences](#data-and-licences) · [Troubleshooting](#troubleshooting) · [Scope notes](#honest-scope-notes) |
-
-## Demo video
-
-The 90-second pitch and demo is built with Remotion in [`video/`](video/). Its model answers come from a live Nebius run on Dioscorides' Greek text and *Flora Europaea*, using [`pipeline/examples/alyssos_live.py`](pipeline/examples/alyssos_live.py). Render it with `npm --prefix video run render`.
+| [The problem](#the-problem) · [What it does](#what-materia-incerta-does) · [How it works](#how-it-works) · [Architecture](#architecture) · [Tech stack](#tech-stack) · [Quickstart](#quickstart) · [Commands](#commands) · [Demo mode](#demo-mode) · [Evaluation](#evaluation) · [Repository layout](#repository-layout) · [Checks](#checks) · [Data and licences](#data-and-licences) · [Troubleshooting](#troubleshooting) · [Scope notes](#honest-scope-notes) |
 
 ## The problem
 
